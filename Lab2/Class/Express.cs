@@ -9,5 +9,6 @@ namespace Lab2.Class
     internal class Express : Train
     {
         private uint name;
+        private uint peopleCapacity; // new field
     }
 }
