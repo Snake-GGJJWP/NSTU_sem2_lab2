@@ -10,5 +10,12 @@ namespace Lab2.Class
     {
         private uint name;
         private uint peopleCapacity; // new field
+        
+        public Express (uint name, uint peopleCapacity, uint number, uint capacity, uint maxSpeed, uint curSpeed = 0)
+            : base (capacity, maxSpeed, curSpeed)
+        {
+            this.name = name;
+            this.peopleCapacity = peopleCapacity;
+        }
     }
 }
