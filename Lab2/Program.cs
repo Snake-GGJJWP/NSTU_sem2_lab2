@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Transactions;
 using Lab2.Class;
-
-// Problems
-// determinator for non-square matrix (should give null)
 
 public static class Program
 {
@@ -103,12 +102,8 @@ public static class Program
 
         // Showcase 10: String extension method demonstration
         Console.WriteLine("\n10. String Extension Method:");
-        string testString = "Hello World";
-        char[] searchChars = { 'x', 'y', 'z' };
-        char[] searchChars2 = { 'H', 'e', 'l' };
-
-        Console.WriteLine($"String '{testString}' contains any of ['x','y','z']: {testString.Contains(searchChars)}");
-        Console.WriteLine($"String '{testString}' contains any of ['H','e','l']: {testString.Contains(searchChars2)}");
+        string s = "-23, 23, +23, f23f, 002";
+        Console.WriteLine($"Integers sum in string \"{s}\": {s.IntSum()}");
 
         // Showcase 11: Matrix extension method
         Console.WriteLine("\n11. Matrix Extension Method:");
@@ -221,11 +216,41 @@ public static class Program
         }
     }
 
-    private static bool Contains (this string str, char[] cArr)
+    /*private static bool Contains (this string str, char[] cArr)
     {
         HashSet<char> cSet = new HashSet<char>(cArr); // transform arr to set for faster search
         cSet.IntersectWith(str);
         return cSet.Count != 0; // if cSet intersection is not 0 than str contains at least one char from cArr
+    }*/
+
+    private static int IntSum(this string str)
+    {
+        int sum = 0;
+        int digit = 0; // current digit of current int
+        int num = 0; // current int
+
+        // Go from right to left for convinience
+        for (int i = str.Length - 1; i > -1; i--) 
+        {
+            char c = str[i];
+
+            bool isDigit = c >= '0' && c <= '9';
+            if (isDigit) 
+            {
+                num += ((int)(c - '0')) * (int)Math.Pow(10, digit);
+                digit++;
+            }
+            else 
+            {
+                num *= c == '-' ? -1 : 1;
+                sum += num;
+                num = 0;
+                digit = 0;
+            }
+        }
+
+        sum += num; // sum the last portion
+        return sum;
     }
 
     private static bool IsSquare (this Matrix matrix)

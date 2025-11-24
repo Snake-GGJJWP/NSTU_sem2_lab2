@@ -174,7 +174,7 @@ namespace Lab2.Class
             {
                 for (int j = 0; j < w; j++)
                 {
-                    newMatrix[i, j] = matrix1[i, j] + 1;
+                    newMatrix[i, j] = matrix1[i, j] - 1;
                 }
             }
             return newMatrix;
